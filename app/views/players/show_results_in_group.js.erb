@@ -1,0 +1,156 @@
+//alert("show results in group");
+<% [1, 2, 3, 4].each do |grnr| %>
+  $('#gr_header_<%= grnr %>').removeClass("gruppeaktiv");
+  $('#gr_header_<%= grnr %>').removeClass("bg-light");
+  $('#gr_body_<%= grnr %>').removeClass("gruppeaktiv");
+  $('#gr_body_<%= grnr %>').removeClass("bg-light");
+  $('#btn_einzelergebnisse_<%= grnr %>').removeClass("btn-warning");
+  $('#btn_einzelergebnisse_<%= grnr %>').addClass("btn-secondary");
+<% end %>
+$('#btn_einzelergebnisse_<%= params[:gruppennummer] %>').removeClass('btn-secondary');
+$('#btn_einzelergebnisse_<%= params[:gruppennummer] %>').addClass('bg-light');
+$('#gr_header_<%= params[:gruppennummer] %>').addClass("bg-light");
+$('#gr_body_<%= params[:gruppennummer] %>').addClass("bg-light");
+//$('#einzelergebnisse').addClass("gruppeaktiv");
+//$('#einzelergebnisse_header').html("<h4>Einzelergebnisse" + " Gruppe <%= params[:gruppennummer] %></h4");
+$('#einzelergebnisse').html("");
+$('#einzelergebnisse').attr("gruppennummer","<%= params[:gruppennummer] %>");
+$('#einzelergebnisse').append("<tr>\
+<th>#</th>\
+<th>Spieler 1</th>\
+<th>Spieler 2</th>\
+<th>Satz 1</th>\
+<th>Satz 2</th>\
+<th>Satz 3</th>\
+<th>Satz 4</th>\
+<th>Satz 5</th>\
+<th>Bälle</th>\
+<th>Sätze</th>\
+</tr>\
+");
+<% @matches_in_group_h.each do | key, value | %>
+    $('#einzelergebnisse').append("\
+    <tr id='einzelergebnisse_tr_<%= key %>' data-matchid='<%= key %>' >\
+    ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td><%= key %></td>\
+        <td><%= value[0]['player1'] %></td>\
+        <td><%= value[0]['player2'] %></td>\
+         ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td>\
+        <select id='option_results_<%= key %>_set1' data-set='1' data-matchid='<%= key %>' class='ball_select' >\
+        ");
+        option_results("<%= value[0]['set1'] %>", "<%= key %>", "set1");
+        $('#option_results_<%= key %>_set1').append("\
+        </select>\
+        </td>\
+        ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td>\
+        <select id='option_results_<%= key %>_set2' data-set='2' data-matchid='<%= key %>' class='ball_select'  >\
+        ");
+        option_results("<%= value[0]['set2'] %>", "<%= key %>", "set2");
+        $('#option_results_<%= key %>_set2').append("\
+        </select>\
+        </td>\
+        ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td>\
+        <select id='option_results_<%= key %>_set3' data-set='3' data-matchid='<%= key %>' class='ball_select' >\
+        ");
+        option_results("<%= value[0]['set3'] %>", "<%= key %>", "set3");
+        $('#option_results_<%= key %>_set3').append("\
+        </select>\
+        </td>\
+        ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td>\
+        <select id='option_results_<%= key %>_set4' data-set='4' data-matchid='<%= key %>' class='ball_select' <%= value[0]['disabled4'] %> >\
+        ");
+        option_results("<%= value[0]['set4'] %>", "<%= key %>", "set4");
+        $('#option_results_<%= key %>_set4').append("\
+        </select>\
+        </td>\
+        ");
+        $('#einzelergebnisse_tr_<%= key %>').append("\
+        <td>\
+        <select id='option_results_<%= key %>_set5' data-set='5' data-matchid='<%= key %>' class='ball_select' <%= value[0]['disabled5'] %> >\
+        ");
+        option_results("<%= value[0]['set5'] %>", "<%= key %>", "set5");
+        $('#option_results_<%= key %>_set5').append("\
+        </select>\
+        </td>\
+        ");
+
+     
+
+       $('#einzelergebnisse_tr_<%= key %>').append("\
+      <td id='ballverhaeltnis_<%= key %>'><%= value[0]['ball_plus'] %>:<%= value[0]['ball_minus'] %></td>\
+      ");
+       $('#einzelergebnisse_tr_<%= key %>').append("\
+      <td id='satzverhaeltnis_<%= key %>'><span id='satzverhaeltnis_<%= key %>_plus'><%= value[0]['satz_plus'] %></span>:<span id='satzverhaeltnis_<%= key %>_plus'><%= value[0]['satz_minus'] %></span></td>\
+      ");
+    $('#einzelergebnisse').append("\
+    </tr>\
+    ");
+
+     
+     
+  
+    
+
+<% end %>
+
+$('#einzelergebnisse').append("</table>");
+
+
+
+function option_results(punkte, key, setnr) {
+  //  console.log(key + '/' + setnr);
+    $('#option_results_' + key + '_' + setnr).append("\
+        <option>" + punkte + "</option>\
+    ");
+    $('#option_results_' + key+  '_' + setnr).append("\
+            <option> </option>\
+            <option>+0</option>\
+            <option>+1</option>\
+            <option>+2</option>\
+            <option>+3</option>\
+            <option>+4</option>\
+            <option>+5</option>\
+            <option>+6</option>\
+            <option>+7</option>\
+            <option>+8</option>\
+            <option>+9</option>\
+            <option>+10</option>\
+            <option>+11</option>\
+            <option>+12</option>\
+            <option>+13</option>\
+            <option>+14</option>\
+            <option>+15</option>\
+            <option>+16</option>\
+            <option>+17</option>\
+            <option>+18</option>\
+            <option>-0</option>\
+            <option>-1</option>\
+            <option>-2</option>\
+            <option>-3</option>\
+            <option>-4</option>\
+            <option>-5</option>\
+            <option>-6</option>\
+            <option>-7</option>\
+            <option>-8</option>\
+            <option>-9</option>\
+            <option>-10</option>\
+            <option>-11</option>\
+            <option>-12</option>\
+            <option>-13</option>\
+            <option>-14</option>\
+            <option>-15</option>\
+            <option>-16</option>\
+            <option>-17</option>\
+            <option>-18</option>\
+    ");
+}
+

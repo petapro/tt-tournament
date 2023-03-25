@@ -1,0 +1,20 @@
+$('#ballverhaeltnis_<%= params[:matchid] %>').html("<%= @ballverhaeltnis[0] %>:<%= @ballverhaeltnis[1] %>");
+$('#satzverhaeltnis_<%= params[:matchid] %>').html("<span id='satzverhaeltnis_<%= params[:matchid] %>_plus'><%= @satzverhaeltnis[0] %></span>:<span id='satzverhaeltnis_<%= params[:matchid] %>_minus'><%= @satzverhaeltnis[1] %></span>");
+
+<% if !@players_in_gruppe_with_results.blank? %>
+    console.log("update group results...");
+    $('#gruppe_<%= params[:gruppennummer] %>').html();
+    $('#gruppe_<%= params[:gruppennummer] %> .tr_spieler').remove();
+    <% @players_in_gruppe_with_results.each do | key, value | %>
+        $('#gruppe_<%= params[:gruppennummer] %>').append("\
+        <tr class='tr_spieler' id='spieler_<%= value[0]['player_id'] %>'>\
+        <td><%= value[0]['name'] %></td>\
+        <td><%= value[0]['match_plus'] %>:<%= value[0]['match_minus'] %></td>\
+        <td><%= value[0]['ball_plus'] %>:<%= value[0]['ball_minus'] %></td>\
+        <td><%= value[0]['satz_plus'] %>:<%= value[0]['satz_minus'] %></td>\
+        </tr>\
+        ");
+    <% end %>
+<% end %>
+
+

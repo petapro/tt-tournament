@@ -1,0 +1,146 @@
+<div class="row">
+<div class="col-md-12 text-center"  style="color: #fff;background-color:#C0C0C0;">
+<h2>One-Page TT-Tournament von <a href="https://tt-finder.net" target="_blank">tt-finder.net</a></h2>
+</div>
+</div>
+
+<div id="notice">
+</div>
+
+<div class="row mt-2">
+<div class="col-md-3 border p-1 text-center" id="gr_header_1">
+<h5>Gruppe 1</h5>
+</div>
+<div class="col-md-3 border  p-1 text-center" id="gr_header_2">
+<h5>Gruppe 2</h5>
+</div>
+<div class="col-md-3 border  p-1 text-center" id="gr_header_3">
+<h5>Gruppe 3</h5>
+</div>
+<div class="col-md-3 border  p-1 text-center" id="gr_header_4">
+<h5>Gruppe 4</h5>
+</div>
+</div>
+
+<div class="row">
+
+<%= render "gruppen", :gruppe => 1, :players => @players_in_gruppe1_with_results %>
+<%= render "gruppen", :gruppe => 2, :players => @players_in_gruppe2_with_results %>
+<%= render "gruppen", :gruppe => 3, :players => @players_in_gruppe3_with_results %>
+<%= render "gruppen", :gruppe => 4, :players => @players_in_gruppe4_with_results %>
+
+</div>
+
+<div class="row mt-2">
+    <% ["1","2","3","4"].each do | gruppe | %>
+        <div class="col-md-3">
+        <%=link_to "Einzelergebnisse Gruppe #{gruppe}", "/players/show_results_in_group/#{gruppe}" , :method => "POST", :remote => true, :class => "btn btn-light", :id=>"btn_einzelergebnisse_#{gruppe}" %>
+         <%#=link_to "X", "/players/remove_group_from_player/#{player.id}/#{player.gruppennummer}", :method => "POST", :remote => true, data: { confirm: 'Sicher den Spieler aus der Gruppe entfernen?'}, :class=> "btn btn-sm btn-danger" %>
+
+        </div>
+    <% end %>
+</div>
+
+
+
+<div class="row">
+<div class="col-md-12">
+<div id="einzelergebnisse_header">
+</div>
+<table id="einzelergebnisse" class='table '>
+
+</table>
+</div>
+
+</div>
+
+
+
+
+<div class="row m-2">
+<div class="offset-md-2 col-md-8">
+
+<hr />
+<div class="row">
+<div class="col-md-6">
+<h4>Angemeldete Spieler</h4>
+</div>
+<div class="col-md-6 text-right">
+<input id="newplayer" size="10" maxlength="10">
+    <%=link_to "Spieler hinzufügen", "#", :remote => true, :method => "POST", :id => 'erzeuge_player', :class => "btn  btn-dark" %>
+</div>
+</div>
+<hr />
+<table class="table table-striped table-sm">
+<tr>
+<th>
+id
+</th>
+<th>
+Spielername
+</th>
+<th>
+Gruppe
+</th>
+<th>
+Action
+</th>
+
+</tr>
+<% @players.each do |player| %>
+<tr>
+<td>
+   <%= player.id %>
+</td>
+<td>
+    <%= player.name %> 
+</td>
+<td>
+<span id="<%= player.id %>">
+
+<% if !player.gruppennummer.blank? %>
+   <% if player.gruppennummer == 1 %>
+      <% selected_group1 = "selected" %>
+   <% elsif player.gruppennummer == 2 %>
+       <% selected_group2 = "selected" %>
+    <% elsif player.gruppennummer == 3 %>
+       <% selected_group3 = "selected" %>
+    <% elsif player.gruppennummer == 4 %>
+       <% selected_group4 = "selected" %>
+   <% end %>
+
+<select name="gruppe_select"  playerid="<%= player.id %>"  class=" gruppe_select select-option no-scroll text-dark bg-light p-2 rounded  border-0" size="1">
+<option value='0'  style="background-color:red;" >keine Gruppe</option>
+<option value='1' <%= selected_group1 %>>Gruppe 1</option>
+<option value='2' <%= selected_group2 %>>Gruppe 2</option>
+<option value='3' <%= selected_group3 %>>Gruppe 3</option>
+<option value='4' <%= selected_group4 %>>Gruppe 4</option>
+</select>
+   <% else %>
+<select name="gruppe_select"  playerid="<%= player.id %>"  class="gruppe_select select-option no-scroll alert-warning p-2 rounded  border-0" size="1">
+<option value='0' style="background-color:red;" selected>keine Gruppe</option>
+<option value='1'>Gruppe 1</option>
+<option value='2'>Gruppe 2</option>
+<option value='3'>Gruppe 3</option>
+<option value='4'>Gruppe 4</option>
+</select>
+
+
+<% end %>
+
+</span>
+
+</td>
+<td><%=link_to "edit", "/players/#{player.id}/edit"%>
+|
+<%= link_to "abmelden", player_path(player), method: :delete, data: { confirm: 'Sicher löschen?'} %>
+
+</td>
+</tr>
+<% end %>
+</table>
+<hr />
+<%#=link_to "Spieler hinzufügen", "/players/new" %>
+
+</div>
+</div>

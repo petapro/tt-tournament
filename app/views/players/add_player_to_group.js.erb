@@ -1,0 +1,15 @@
+
+$('#gruppe_<%= params[:gruppennummer] %> .tr_spieler').remove();
+
+<% @players_group.each do | player | %>
+    $('#gruppe_<%= params[:gruppennummer] %>').append("\
+    <tr class='tr_spieler' id='spieler_<%= player.id %>'>\
+        <td><%= player.name %></td>\
+    <td>0</td>\
+    <td>0:0</td>\
+    <td>0:0</td>\
+    </tr>\
+    ");
+<% end %>
+
+ window.location.href="/";

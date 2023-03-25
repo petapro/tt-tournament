@@ -1,0 +1,9 @@
+<h1>Neuen Spieler hinzufügen</h1>
+<%= form_with model: @player  do |f| %>
+
+<%= f.text_field :name, size: "20" %>
+
+
+  <%= f.submit "hinzufügen" %>
+<% end %>
+

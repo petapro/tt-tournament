@@ -1,0 +1,18 @@
+<div class="col-md-3 border bg-light" id="gr_body_<%= gruppe %>">
+    <table id="gruppe_<%= gruppe %>" class="table table-bordered table-sm bg-white mt-2">
+    <tr><th>Spieler</th><th>Spiele</th><th>Bälle</th><th>Sätze</th></tr>
+  
+        <% players.each do |key, value|  %>
+            
+            <tr id='spieler_<%= key %>' class='tr_spieler'>
+         
+            <td><%= value[0]["name"] %></td>
+            <td><%= value[0]["match_plus"] %>:<%= value[0]["match_minus"] %></td>
+            <td><%= value[0]["ball_plus"] %>:<%= value[0]["ball_minus"] %></td>
+            <td><%= value[0]["satz_plus"] %>:<%= value[0]["satz_minus"] %></td>
+            </tr>
+            
+        <% end %>
+    
+    </table>
+</div>

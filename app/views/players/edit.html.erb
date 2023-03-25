@@ -1,0 +1,9 @@
+<h1>Spieler editieren</h1>
+<%= form_for :player,url: "/players/#{@player.id}", method: :patch do |f|%>
+    <p>
+<%=  "Name" %><br>
+<%= f.text_field(:name, size: "10",:maxlength => "10") %>
+</p>
+
+ <%= f.submit "Name updaten" %>
+<% end %>
